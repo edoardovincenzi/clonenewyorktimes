@@ -53,7 +53,7 @@ const SectionSingle: React.FC<{ nameSection: string }> = ({ nameSection }) => {
                     <h3>{title}</h3>
                     <p
                       style={{
-                        overflow: "scroll",
+                        overflow: 'hidden',
                         textOverflow: "ellipsis",
                       }}
                     >
