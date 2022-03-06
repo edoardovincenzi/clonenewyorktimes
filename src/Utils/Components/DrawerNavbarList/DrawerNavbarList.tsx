@@ -1,45 +1,39 @@
-import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { Link } from "react-router-dom";
-import useDataListSection from "../Hooks/useDataListSection";
-import { Loading } from "./";
+import { useGlobalContext } from "../../../Hooks/MyGlobalContext";
+import { Loading } from "..";
+import { BoxDrawer, LinkDrawer } from "./style";
 
 const DrawerNavbarList = ({ toggleDrawer }: any) => {
-  const { dataList, errorList } = useDataListSection();
+  const { dataList, errorList } = useGlobalContext();
   if (errorList) {
     console.log(errorList);
   }
 
   return (
-    <Box
+    <BoxDrawer
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
-      style={{ backgroundColor: "#1976d2" }}
     >
       {dataList ? (
         <List>
           {dataList.map((item: any, index: number) => {
             const { display_name, section } = item;
             return (
-              <Link
-                to={`Section/${section}`}
-                key={index}
-                style={{ textDecoration: "none", color: "white" }}
-              >
+              <LinkDrawer to={`Section/${section}`} key={index}>
                 <ListItem button key={index}>
                   <ListItemText primary={display_name} />
                 </ListItem>
-              </Link>
+              </LinkDrawer>
             );
           })}
         </List>
       ) : (
         <Loading />
       )}
-    </Box>
+    </BoxDrawer>
   );
 };
 

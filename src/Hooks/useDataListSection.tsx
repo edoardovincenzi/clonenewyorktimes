@@ -1,16 +1,22 @@
 import axios from "axios";
-import { API_BASE, API_KEY, API_LIST_SECTION } from "../Constant/Variable";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { sectionFail } from "../Utils/costant";
+import { useGlobalContext } from "./MyGlobalContext";
 
 const useDataListSection = () => {
-  const [dataList, setDataList] = useState([]);
-  const [errorList, setErrorList] = useState("");
+  const { dataList, setDataList, setErrorList } = useGlobalContext();
 
   const fetchData = () => {
     axios
-      .get(`${API_BASE}${API_LIST_SECTION}?api-key=${API_KEY}`)
+      .get(
+        `${process.env.REACT_APP_API_BASE}${process.env.REACT_APP_API_LIST_SECTION}?api-key=${process.env.REACT_APP_API_KEY}`
+      )
       .then((res) => {
-        setDataList(res.data.results);
+        setDataList(
+          res.data.results.filter((data: any) =>
+            sectionFail.includes(data.section)
+          )
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -18,10 +24,10 @@ const useDataListSection = () => {
       });
   };
   useEffect(() => {
-    fetchData();
+    if (!dataList || dataList.length === 0) {
+      fetchData();
+    }
   }, []);
-
-  return { dataList, errorList };
 };
 
 export default useDataListSection;

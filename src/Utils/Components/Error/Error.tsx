@@ -1,17 +1,15 @@
-import { Button, Container } from "@mui/material";
+import { Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { ContainerError } from "./style";
+import { handleButton } from ".";
 
 const Error = () => {
   const { nameSection } = useParams();
 
-  const handleButton = () => {
-    window.location.reload();
-  };
-
   return (
-    <Container
+    <ContainerError
       maxWidth="lg"
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
@@ -34,7 +32,7 @@ const Error = () => {
       <Button onClick={handleButton} variant="contained">
         Ricarica la pagina
       </Button>
-    </Container>
+    </ContainerError>
   );
 };
 
